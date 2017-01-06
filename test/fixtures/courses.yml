@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  prerequisites: MyText
+  content: MyText
+  place: MyString
+  start: 2016-12-30
+  time: MyString
+  confirmed: false
+  category: one
+  instructor: one
+
+two:
+  name: MyString
+  description: MyText
+  prerequisites: MyText
+  content: MyText
+  place: MyString
+  start: 2016-12-30
+  time: MyString
+  confirmed: false
+  category: two
+  instructor: two

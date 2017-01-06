@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IEEE AlexSB | Courses System </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <nav class="navbar navbar-default" style="min-height:auto">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"></li>
+                    <a class="navbar-brand" href="/"><img src="/img/logo.png" width="200px"></a>
+                </ul>
+
+                <%= form_tag(search_path, method: 'get', class: "navbar-form navbar-right", id: "search-form", enforce_utf8: false) do %>
+                    <div class="form-group">
+                        <%= text_field_tag :search, params[:search], {class: 'form-control', placeholder: 'Search Courses'} %>
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                    </button>
+
+                    <a type="button" class="btn btn-success" href="/admin/login">
+                        <% if user_signed_in? %>
+                            Admin Panel
+                        <% else %>
+                            Login
+                        <% end %>
+                    </a>
+                <% end %>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div id="carousel2" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel2" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel2" data-slide-to="1"></li>
+            <li data-target="#carousel2" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active"><img src="/img/1.png" alt="First slide image" class="center-block">
+                <div class="carousel-caption">
+                    <h1>Register NOW</h1>
+                    <p>Choose from courses in all fields</p>
+                </div>
+            </div>
+            <div class="item"><img src="/img/3.gif" alt="Second slide image" class="center-block">
+                <div class="carousel-caption">
+                    <h2>Choose Yours</h2>
+                </div>
+            </div>
+            <div class="item"><img src="/img/2.png" alt="Third slide image" class="center-block">
+                <div class="carousel-caption">
+                    <h1>Get Certified</h1>
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#carousel2" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#carousel2" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>
+    </div>
+    <div class="container">
+        <div class="row"></div>
+    </div>
+
+    <h1 class="text-center" id="font">MID YEAR COURSES</h1>
+
+    <div class="btn-group-horizontal text-center">
+        <%= link_to 'All Courses', root_path, class: 'btn btn-default' %>
+        <% @categories.each do |category| %>
+            <%= link_to category.name, root_path(:category_id => category.id), class: 'btn btn-default' %>
+        <% end %>
+    </div>
+
+    <p></p>
+
+    <% unless @courses.empty? %>
+        <div id="tabContent1" class="tab-content" style="background: url(/img/IMG_0108.jpg);">
+            <p>&nbsp;</p>
+            <div class="container">
+                <div class="row text-center">
+                    <% @courses.each do |course| %>
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="thumbnail">
+
+                                <% if course.image_url and course.image_url != '' %>
+                                    <img src="<%= course.image_url %>" alt="Course Image" class="img-responsive">
+                                <% else %>
+                                    <img src="/img/course.png" alt="Thumbnail Image 1" class="img-responsive">
+                                <% end %>
+
+                                <div class="caption">
+                                    <h3><%= course.name %></h3>
+                                    <p>
+                                        <% if course.description and course.description != '' %>
+                                            <%= course.description[0, 49] %>...
+                                        <% end %>
+                                    </p>
+                                    <p>
+                                        <a href="/courses/<%= course.id %>" class="btn btn-primary" role="button">
+                                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                            More Info
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+
+                <nav class="text-center">
+                    <!-- Add class .pagination-lg for larger blocks or .pagination-sm for smaller blocks-->
+                    <span class="pagination">
+                        <%= will_paginate @courses, renderer: BootstrapPagination::Rails %>
+                    </span>
+                </nav>
+            </div>
+        </div>
+    <% else %>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1>No results</h1>
+            </div>
+        </div>
+    <% end %>
+
+    <footer class="text-center">
+        <div><img src="/img/4.png" class="img-responsive" alt="Placeholder image"></div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+</body>
+</html>

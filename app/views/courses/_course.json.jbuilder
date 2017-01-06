@@ -1,0 +1,2 @@
+json.extract! course, :id, :name, :description, :prerequisites, :content, :place, :start, :time, :confirmed, :category_id, :instructor_id, :created_at, :updated_at
+json.url course_url(course, format: :json)
