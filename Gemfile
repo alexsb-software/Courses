@@ -51,8 +51,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby]
 
 gem 'devise'
-gem 'twitter-bootstrap-rails'
-gem 'bootstrap-sass'
+# gem 'twitter-bootstrap-rails'
+# gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 gem 'activeadmin', github: 'activeadmin'
